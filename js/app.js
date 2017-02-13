@@ -23,7 +23,7 @@ var col = {
 }
 var score = 0;
 
-var currentChar = "boy";
+var currentChar = 'boy';
 
 // this function draws the updated score to the canvas
 function printScore(score) {
@@ -44,17 +44,18 @@ function collision(){
 function scoreUp(pts){
     var newScore;
     newScore = score + pts;
-    console.log("score is:  " + newScore);
+    console.log('score is:  ' + newScore);
     printScore(newScore);
     return newScore;
 }
 function scoreDown(pts){
     var newScore;
     newScore = score;
+    //score can't go below 0 points
     if (score >= 5){
         newScore = score - pts;
     }
-    console.log("score is:  " + newScore);
+    console.log('score is:  ' + newScore);
     printScore(newScore);
     return newScore;
 }
@@ -69,7 +70,7 @@ var Enemy = function(posY, speed, name) {
     this.name = name;
     this.speed = speed;
 
-    if (this.name === "bug4"){
+    if (this.name === 'bug4'){
         initalPosition = [-500, posY];
     } else {}
 
@@ -80,7 +81,7 @@ var Enemy = function(posY, speed, name) {
     // a helper we've provided to easily load images
     //create new subclass of bug, golden that runs a bit faster and moves UP the rows instead of down.
 
-    if (this.name === "bug4" || this.name === "bug2"){
+    if (this.name === 'bug4' || this.name === 'bug2'){
         this.sprite = 'images/enemy-bug2.png';
     } else {
        this.sprite = 'images/enemy-bug.png';
@@ -115,7 +116,6 @@ Enemy.prototype.update = function(dt) {
     if (this.x < player.x + player.width  && this.x + this.width  > player.x &&
         this.y < player.y + player.height && this.y + this.height > player.y) {
     // The objects are touching
-    console.log("Collision Detected with: " + this.name);
     collision();
     }
 };
@@ -127,44 +127,35 @@ Enemy.prototype.render = function() {
 
 
 //instantiate new enemy objects
-enemy1 = new Enemy(row.r1, 1.1, "bug1");
-enemy2 = new Enemy(row.r2, 1.45, "bug2");
-enemy3 = new Enemy(row.r3, 1.25, "bug3");
-enemy4 = new Enemy(row.r3, .95, "bug4")
+enemy1 = new Enemy(row.r1, 1.1, 'bug1');
+enemy2 = new Enemy(row.r2, 1.45, 'bug2');
+enemy3 = new Enemy(row.r3, 1.25, 'bug3');
+enemy4 = new Enemy(row.r3, .95, 'bug4')
+
 var allEnemies = [enemy1, enemy2, enemy3, enemy4];
 
 
 // Place the player object in a variable called player
 var Player = function(){
-    if (currentChar === "boy") {
-        this.sprite = 'images/char-boy.png'
-    } else if (currentChar === "girl1"){
-        this.sprite = 'images/char-cat-girl.png'
-    } else if (currentChar === "girl2"){
-        this.sprite = 'images/char-horn-girl.png'
-    } else if (currentChar === "girl3"){
-        this.sprite = 'images/char-pink-girl.png'
-    } else {
-        this.sprite = 'images/char-boy.png'
-    }
-
+    //generate sprite, collision dimensions and initial position.
+    this.sprite = 'images/char-boy.png'
     this.x = 200;
     this.y = 375;
     this.width = 65;
     this.height = 75;
-
 }
+
 Player.prototype.update = function(direction){
     //check direction of keypress and boundries of game board, and assign new values for x & y positions
-    if ((direction === "left") && (this.x >= 100)){
+    if ((direction === 'left') && (this.x >= 100)){
         this.x -= 100;
-    } else if ((direction === "right") && (this.x < 400)){
+    } else if ((direction === 'right') && (this.x < 400)){
         this.x += 100;
-    } else if ((direction === "up") && (this.y >= 15)){
+    } else if ((direction === 'up') && (this.y >= 15)){
         this.y -= 85;
-    } else if ((direction === "down") && (this.y < 375)){
+    } else if ((direction === 'down') && (this.y < 375)){
         this.y += 85;
-    } else {direction = "invalid";}
+    } else {direction = 'invalid';}
     var posX = this.x,
         posY = this.y;
     if (this.y < 15){
