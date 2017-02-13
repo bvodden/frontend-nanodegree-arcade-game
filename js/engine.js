@@ -14,6 +14,9 @@
  * a little simpler to work with.
  */
 
+
+
+
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -21,13 +24,16 @@ var Engine = (function(global) {
      */
     var doc = global.document,
         win = global.window,
+        frame = doc.createElement('div'),
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
 
     canvas.width = 505;
-    canvas.height = 606;
-    doc.body.appendChild(canvas);
+    canvas.height = 580;
+    doc.body.appendChild(frame);
+    frame.appendChild(canvas);
+    frame.setAttribute("id", "canvas-box");
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -67,6 +73,7 @@ var Engine = (function(global) {
         reset();
         lastTime = Date.now();
         main();
+        printScore(0);
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -139,6 +146,7 @@ var Engine = (function(global) {
         renderEntities();
     }
 
+
     /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
@@ -171,7 +179,11 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/enemy-bug2.png',
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png'
     ]);
     Resources.onReady(init);
 
