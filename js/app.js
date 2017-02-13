@@ -5,7 +5,7 @@
 // only apears at a score of ~10 or higher, gold or blue shell?
 // add "gems" to collect at score 3 (+2 and +5 points)
 
-// set up a grid system
+// set up a grid coordinate system
 var row = {
     r0: 0,
     r1: 50,
@@ -25,13 +25,13 @@ var score = 0;
 
 var currentChar = "boy";
 
-    // this function draws the updated score to the canvas
+// this function draws the updated score to the canvas
 function printScore(score) {
-        ctx.fillStyle = 'rgb(0,0,0)';
-        ctx.fillRect(100, 0, 450, 100);
-        ctx.fillStyle = 'rgb(200,200,200)';
-        ctx.font = '36px sans-serif';
-        ctx.fillText('Score:  ' + score, 320, 35);
+    ctx.fillStyle = 'rgb(0,0,0)';
+    ctx.fillRect(100, 0, 450, 100);
+    ctx.fillStyle = 'rgb(200,200,200)';
+    ctx.font = '36px sans-serif';
+    ctx.fillText('Score:  ' + score, 320, 35);
 }
 function collision(){
     //reset player to initial position, subtract 5 from score
@@ -39,6 +39,8 @@ function collision(){
     player.y = row.r5;
     score = scoreDown(5);
 }
+
+//functions to alter the score
 function scoreUp(pts){
     var newScore;
     newScore = score + pts;
@@ -76,7 +78,6 @@ var Enemy = function(posY, speed, name) {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-
     //create new subclass of bug, golden that runs a bit faster and moves UP the rows instead of down.
 
     if (this.name === "bug4" || this.name === "bug2"){
@@ -125,14 +126,7 @@ Enemy.prototype.render = function() {
 };
 
 
-
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
+//instantiate new enemy objects
 enemy1 = new Enemy(row.r1, 1.1, "bug1");
 enemy2 = new Enemy(row.r2, 1.45, "bug2");
 enemy3 = new Enemy(row.r3, 1.25, "bug3");
@@ -180,6 +174,7 @@ Player.prototype.update = function(direction){
     // console.log("players new position: " + this.x + ", " + this.y);
 }
 Player.prototype.reachEnd = function(){
+    //reset the player on reaching the end of the map.
     this.x = 200;
     this.y = 375;
     score = scoreUp(5);
@@ -188,26 +183,11 @@ Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 Player.prototype.handleInput = function(key){
-    var keyPress = key;
-    var direction = "";
-    switch (keyPress) {
-        case 'left':
-          direction = "left";
-          break;
-        case 'right':
-          direction = "right";
-          break;
-        case 'up':
-          direction = "up";
-          break;
-        case 'down':
-          direction = "down";
-          break;
-        default:
-          direction = "invalid";
-    }
+    var direction = key;
     player.update(direction);
 }
+
+//instantiate new player object
 player = new Player();
 
 // This listens for key presses and sends the keys to your
