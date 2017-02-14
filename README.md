@@ -3,7 +3,7 @@
 ## "Bugger"
 
 
-To start the game load [https://github.com/bvodden/frontend-nanodegree-arcade-game/blob/master/index.html](index.html).
+To start the game load [index.html](https://github.com/bvodden/frontend-nanodegree-arcade-game/blob/master/index.html.).
 
 The objective is to beat your high score! Do this by moving your character across the map, to the saftey of the water using the arrow direction keys.
 
