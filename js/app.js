@@ -91,7 +91,7 @@ Enemy.prototype.update = function(dt) {
             this.y = row.r1;
         } else if(this.y < 55){
             this.y = row.r2;
-        } else if(this.y = 125){
+        } else if(this.y === 125){
             this.y = row.r3;
         }
     }
@@ -131,8 +131,6 @@ Player.prototype.update = function(direction){
     } else if ((direction === 'down') && (this.y < 375)){
         this.y += 85;
     } else {direction = 'invalid';}
-    var posX = this.x;
-    var posY = this.y;
     if (this.y < 15){
         this.reachEnd();
     }
