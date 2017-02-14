@@ -16,37 +16,41 @@ var col = {
     c4: 400
 };
 
-//A score object is created with methods to change and print the score to screen and instantiated.
-var Score = function(){
-    this.points = 0;
-};
-Score.prototype.scoreUp = function(pts){
-        var newScore;
-        newScore = this.points + pts;
-        this.points = newScore;
-        this.printScore(this.points);
-        return;
-};
-Score.prototype.scoreDown = function(pts){
-        var newScore;
-        newScore = this.points;
-        //score can't go below 0 points
-        if (this.points >= 5){
-            newScore = this.points - pts;
-        }
-        this.points = newScore;
-        this.printScore(newScore);
-        return;
-};
-Score.prototype.printScore = function(score) {
-        ctx.fillStyle = 'rgb(0,0,0)';
-        ctx.fillRect(100, 0, 450, 100);
-        ctx.fillStyle = 'rgb(200,200,200)';
-        ctx.font = '36px sans-serif';
-        ctx.fillText('Score:  ' + this.points, 320, 35);
-        return;
-};
-var score = new Score();
+
+// this function draws the updated score to the canvas
+function printScore(score) {
+    ctx.fillStyle = 'rgb(0,0,0)';
+    ctx.fillRect(100, 0, 450, 100);
+    ctx.fillStyle = 'rgb(200,200,200)';
+    ctx.font = '36px sans-serif';
+    ctx.fillText('Score:  ' + score, 320, 35);
+}
+function collision(){
+    //reset player to initial position, subtract 5 from score
+    player.x = col.c2;
+    player.y = row.r5;
+    score = scoreDown(5);
+}
+
+//functions to alter the score
+function scoreUp(pts){
+    var newScore;
+    newScore = score + pts;
+    console.log('score is:  ' + newScore);
+    printScore(newScore);
+    return newScore;
+}
+function scoreDown(pts){
+    var newScore;
+    newScore = score;
+    //score can't go below 0 points
+    if (score >= 5){
+        newScore = score - pts;
+    }
+    console.log('score is:  ' + newScore);
+    printScore(newScore);
+    return newScore;
+}
 
 
 // Enemies our player must avoid
@@ -99,8 +103,8 @@ Enemy.prototype.update = function(dt) {
     //check collisions with player object
     if (this.x < player.x + player.width  && this.x + this.width  > player.x &&
         this.y < player.y + player.height && this.y + this.height > player.y) {
-        // The objects are touching, call collision handler
-        player.collision();
+    // The objects are touching
+    collision();
     }
 };
 
@@ -134,29 +138,23 @@ Player.prototype.update = function(direction){
     var posX = this.x;
     var posY = this.y;
     if (this.y < 15){
-        this.reachEnd();
+        player.reachEnd();
     }
-    this.render();
+    player.render();
     // console.log("players new position: " + this.x + ", " + this.y);
 };
 Player.prototype.reachEnd = function(){
     //reset the player on reaching the end of the map.
     this.x = 200;
     this.y = 375;
-    score.scoreUp(5);
+    score = scoreUp(5);
 };
 Player.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 Player.prototype.handleInput = function(key){
     var direction = key;
-    this.update(direction);
-};
-Player.prototype.collision = function(){
-    //reset player to initial position, subtract 5 from score
-    this.x = col.c2;
-    this.y = row.r5;
-    score.scoreDown(5);
+    player.update(direction);
 };
 
 //instantiate new enemy objects
